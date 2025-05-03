@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediOptima</title>
+    <link rel="icon" href="./static/images/heart-pulse-solid.svg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="./static/css/style.css">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .chat-container {
+            width: 90%;
+            max-width: 600px;
+            height: 80vh;
+            display: flex;
+            flex-direction: column;
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 15px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+            position: relative;
+            margin-top: 100px;
+        }
+
+        .chat-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px;
+            background: rgba(0, 0, 0, 0.6);
+            color: white;
+            font-size: 22px;
+            font-weight: bold;
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
+        }
+
+        .chat-box {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .message {
+            background: rgba(0, 0, 0, 0.4);
+            color: white;
+            padding: 15px;
+            border-radius: 12px;
+            margin: 8px 0;
+            font-size: 18px;
+            font-weight: bold;
+            max-width: 90%;
+            word-wrap: break-word;
+        }
+
+        .chat-input {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            background: rgba(0, 0, 0, 0.4);
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 14px;
+            border: none;
+            background: white;
+            color: black;
+            font-size: 16px;
+            outline: none;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .chat-input .send-btn {
+            background: #4caf50;
+            color: white;
+            padding: 12px 18px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-left: 10px;
+            font-size: 20px;
+        }
+
+        .chat-input .send-btn i {
+            color: white;
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        .upload-btn {
+            background: #007bff;
+            color: white;
+            padding: 12px 18px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-left: 10px;
+            font-size: 20px;
+        }
+        .message ul {
+    list-style-type: disc;  /* Ensures proper bullet points */
+    margin-left: 20px;      /* Indents the list */
+    padding-left: 20px;
+}
+
+.message ol {
+    list-style-type: decimal; /* Ensures proper numbering */
+    margin-left: 20px;
+    padding-left: 20px;
+}
+
+.message li {
+    margin-bottom: 8px; /* Adds spacing between list items */
+    line-height: 1.6;   /* Improves readability */
+}
+        
+    </style>
+</head>
+
+<body>
+
+    <header class="header">
+        <a href="{{url_for('index')}}" class="logo"><i class="fas fa-heartbeat"></i> MediOptima</a>
+        <nav class="navbar">
+            <a href="{{url_for('index')}}#home">Home</a>
+            <a href="{{url_for('index')}}#scans">Scans</a>
+            <a href="{{url_for('chatbot')}}">Chatbot</a>
+            <a href="{{url_for('profile')}}"><span class="fas fa-user"></span></a>
+        </nav>
+    </header>
+
+    <div class="chat-container">
+        <div class="chat-header">
+            💬 MediOptima Chat
+        </div>
+        <div class="chat-box" id="chat-box"></div>
+        <div class="chat-input">
+            <input type="text" id="user-input" placeholder="Type a message...">
+            <input type="file" id="file-input" class="file-input" accept="image/*">
+            <button class="upload-btn" onclick="document.getElementById('file-input').click();"><i class="fas fa-upload"></i></button>
+            <button class="send-btn" onclick="sendMessage()"><i class="fas fa-paper-plane"></i></button>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/4.3.0/marked.min.js"></script>
+
+    <script>
+        async function sendMessage() {
+    const inputField = document.getElementById("user-input");
+    const fileInput = document.getElementById("file-input");
+    const chatBox = document.getElementById("chat-box");
+
+    const message = inputField.value.trim();
+    const file = fileInput.files[0];
+
+    if (!message && !file) return;
+
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            appendMessage("user", `<p>📷 Image uploaded</p><img src="${e.target.result}" width="300">`);
+        };
+        reader.readAsDataURL(file);
+    } else {
+        appendMessage("user", `<p><strong>You:</strong> ${message}</p>`);
+    }
+
+    const formData = new FormData();
+    if (message) formData.append("message", message);
+    if (file) formData.append("image", file);
+
+    const response = await fetch("/chat", {
+        method: "POST",
+        body: formData
+    });
+
+    const data = await response.json();
+    appendMessage("bot", data.response);
+    inputField.value = "";
+    fileInput.value = "";
+}
+
+let messageCounter = 0; // Counter to assign unique IDs
+
+function appendMessage(sender, markdownText) {
+    const chatBox = document.getElementById("chat-box");
+    const messageDiv = document.createElement("div");
+    messageDiv.classList.add("message");
+
+    // Convert Markdown to HTML
+    const htmlContent = marked.parse(markdownText);
+
+    // Assign a unique ID to each bot message
+    let messageId = `msg-${messageCounter++}`;
+    messageDiv.id = messageId;
+
+    messageDiv.innerHTML = `<strong>${sender === "user" ? "You" : "MediBot"}:</strong><br> ${htmlContent}`;
+    chatBox.appendChild(messageDiv);
+
+    // Auto-scroll only if it's the user's message
+    if (sender === "user") {
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    // Read the bot's response aloud and scroll to that message
+    if (sender === "bot") {
+        speakText(markdownText, messageId);
+    }
+}
+
+let currentUtterance = null; // Track ongoing speech
+
+function speakText(text, messageId) {
+    const synth = window.speechSynthesis;
+
+    // Stop any ongoing speech before starting new one
+    if (currentUtterance) {
+        synth.cancel();
+    }
+
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = 'en-US';  
+    utterance.rate = 1;        
+    utterance.pitch = 1;       
+    currentUtterance = utterance; // Store the current utterance
+
+    // Show the Stop Speech button
+    document.getElementById("stop-speech-btn").style.display = "block";
+
+    // Scroll to the message when speech starts
+    utterance.onstart = function () {
+        const messageElement = document.getElementById(messageId);
+        if (messageElement) {
+            messageElement.scrollIntoView({ behavior: "smooth", block: "center" });
+        }
+    };
+
+    // Hide the Stop Speech button when speech ends
+    utterance.onend = function () {
+        currentUtterance = null;
+        document.getElementById("stop-speech-btn").style.display = "none";
+    };
+
+    synth.speak(utterance);
+}
+
+// Function to stop speech manually
+function stopSpeech() {
+    const synth = window.speechSynthesis;
+    synth.cancel();
+    currentUtterance = null;
+
+    // Hide the Stop Speech button
+    document.getElementById("stop-speech-btn").style.display = "none";
+}
+
+// Add Stop Speech button (Initially hidden)
+document.body.insertAdjacentHTML("beforeend", `
+    <button id="stop-speech-btn" onclick="stopSpeech()" style="
+        position: fixed; bottom: 20px; right: 20px; 
+        background: red; color: white; padding: 10px;
+        border: none; border-radius: 5px; cursor: pointer;
+        display: none;
+    ">🛑 Stop Speech</button>
+`);
+
+    </script>
+
+</body>
+</html>

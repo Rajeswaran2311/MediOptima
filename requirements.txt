@@ -1,0 +1,11 @@
+Flask
+Flask-SQLAlchemy
+plotly
+numpy
+scikit-learn
+pandas
+python-dotenv
+Flask-Mail
+gunicorn
+pdfkit
+reportlab
