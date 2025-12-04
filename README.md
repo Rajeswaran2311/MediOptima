@@ -33,12 +33,6 @@ medi optima is a web application developed using Flask, a web framework in Pytho
 - **database.db:** SQLite database file storing user and appointment information.
 - **Data:** Contains CSV files used for training and testing the disease prediction model.
 
-## Workflow Explanation
-
-
-https://github.com/deepraj21/JanSevak/assets/106394426/80da0f97-b0d8-436d-8191-59011eeb72da
-
-
    
 ## Architectural Diagram
 ![JanSevak - Architectural Diagram](https://github.com/deepraj21/JanSevak/assets/106394426/91af5902-6ed5-4817-887b-ff89fcdcba86)
