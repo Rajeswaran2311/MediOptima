@@ -35,7 +35,8 @@ medi optima is a web application developed using Flask, a web framework in Pytho
 
    
 ## Architectural Diagram
-![JanSevak - Architectural Diagram](https://github.com/deepraj21/JanSevak/assets/106394426/91af5902-6ed5-4817-887b-ff89fcdcba86)
+![architecture](https://github.com/user-attachments/assets/8cb60830-72ad-4e9d-ae76-076c0785fc9b)
+
 
 
 ## Getting Started
