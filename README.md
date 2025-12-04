@@ -1,7 +1,7 @@
 # Medioptima
 <img src="static/images/doctors-animate.svg" align="right" height="300px">
 
-medi optima is a web application developed using Flask, a web framework in Python that aims to assist patients in obtaining the necessary medical care for their needs. The system allows users to register as patients or doctors, book appointments, and predict diseases based on symptoms. Doctors can view and manage appointments, while patients can track their appointments and update their profiles. Additionally, the system provides information on various health-related topics through blog posts and also analyses mental health conditiion of patients.
+medi optima is a web application developed using Flask, a web framework in Python that aims to assist patients in obtaining the necessary medical care for their needs. The system allows users to register as patients, and predict diseases based on symptoms. Additionally, the system provides information on various health-related topics through blog posts and also analyses mental health conditiion of patients.
 
 ## Features
 
@@ -14,15 +14,11 @@ medi optima is a web application developed using Flask, a web framework in Pytho
    - Users can log in to access personalized dashboards.
    - Sessions are managed to ensure secure access, and users can log out when done.
 
-3. **Appointment Booking:**
-   - Patients can book appointments with doctors.
-   - Doctors can view and manage appointments assigned to them.
-
-4. **Disease Prediction:**
+3. **Disease Prediction:**
    - A machine learning model predicts diseases based on user-input symptoms.
    - The system uses a Decision Tree Classifier trained on medical data.
 
-5. **Scans Section:**
+4. **Scans Section:**
    - Users can find information on different medical scans, such as brain tumor, lung, and cataract scans.
 
 ## Project Structure
