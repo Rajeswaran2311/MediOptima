@@ -1,8 +1,7 @@
-# Jansevak
-
+# Medioptima
 <img src="static/images/doctors-animate.svg" align="right" height="300px">
 
-Jan Sevak is a web application developed using Flask, a web framework in Python that aims to assist patients in obtaining the necessary medical care for their needs. The system allows users to register as patients or doctors, book appointments, and predict diseases based on symptoms. Doctors can view and manage appointments, while patients can track their appointments and update their profiles. Additionally, the system provides information on various health-related topics through blog posts and also analyses mental health conditiion of patients.
+medi optima is a web application developed using Flask, a web framework in Python that aims to assist patients in obtaining the necessary medical care for their needs. The system allows users to register as patients or doctors, book appointments, and predict diseases based on symptoms. Doctors can view and manage appointments, while patients can track their appointments and update their profiles. Additionally, the system provides information on various health-related topics through blog posts and also analyses mental health conditiion of patients.
 
 ## Features
 
@@ -23,21 +22,7 @@ Jan Sevak is a web application developed using Flask, a web framework in Python 
    - A machine learning model predicts diseases based on user-input symptoms.
    - The system uses a Decision Tree Classifier trained on medical data.
 
-5. **Blog Section:**
-   - Information on various health-related topics is provided through blog posts.
-   - Topics include Transforming Healthcare, Holistic Health, Nourishing Body, and Importance of Games.
-
-6. **Admin Section:**
-   - Admins can access an admin dashboard (admin.html).
-   - Admins have privileged access to manage the system.
-
-7. **Privacy Policy:**
-   - Users can view the privacy policy.
-
-8. **Video Call:**
-   - Users can access a video call feature (videocall.html).
-
-9. **Scans Section:**
+5. **Scans Section:**
    - Users can find information on different medical scans, such as brain tumor, lung, and cataract scans.
 
 ## Project Structure
@@ -61,7 +46,7 @@ https://github.com/deepraj21/JanSevak/assets/106394426/80da0f97-b0d8-436d-8191-5
 
 ## Getting Started
 
-1. Clone the repository: `git clone https://github.com/your-username/JanSevak.git`
+1. Clone the repository: `git clone https://github.com/your-username/Medioptima.git`
 2. Install dependencies: `pip install -r requirements.txt`
 3. Run the application: `python app.py`
 
@@ -75,12 +60,6 @@ Visit [http://localhost:5000](http://localhost:5000) in your browser to access t
 - NumPy
 - TensorFlow
 - Scikit-learn
-
-<!-- ## Contributors
-
-- [Your Name]
-- [Contributor 1]
-- [Contributor 2] -->
 
 Feel free to contribute to the project by opening issues or creating pull requests.
 
